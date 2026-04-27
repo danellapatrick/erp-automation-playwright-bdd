@@ -1,30 +1,18 @@
 class LoginPage:
-
-
     def __init__(self, page):
         self.page = page
+        self.url = "https://seasons-orchards-six.vercel.app/auth"
 
-        # selectors (keep centralized)
-        self.employee_email = "//input[@id='login-email']"
-        self.password = "//div[@class='flex flex-col gap-4']//div[2]//div[2]"
-        self.login_btn = "//button[normalize-space()='Sign In']"
+    def goto(self):
+        self.page.goto(self.url)
 
-    def open_login_page(self):
-        self.page.goto("https://your-erp-url.com/login")
+    def login(self, email, password):
+        self.page.fill('input[id="login-email"]', email)
+        self.page.fill('input[id="login-password"]', password)
 
-    def login(self, employee_email, password):
-        self.page.fill(self.employee_email,self.employee_email)
-        self.page.fill(self.password, password)
-        self.page.click(self.login_btn)
+    def click_login(self):
+        self.page.click('button[type="submit"]')
 
-
-    def open_login_page(self):
-        self.page.goto("https://seasons-orchards-six.vercel.app/auth")
-
-    def login(self, employee_email, password):
-        self.page.fill(self.employee_email, employee_email)
-        self.page.fill(self.password, password)
-        self.page.click(self.login_btn)
-
-        # wait for successful login (VERY IMPORTANT)
-        self.page.wait_for_url("https://seasons-orchards-six.vercel.app/operational")
+    def is_dashboard_visible(self):
+        wait_for_url("**/operational", timeout=10000)   
+        return self.page.url != self.url

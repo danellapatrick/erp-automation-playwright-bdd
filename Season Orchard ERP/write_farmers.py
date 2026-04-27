@@ -1,4 +1,4 @@
-from pytest_bdd import scenario, given, when, then
+content = """from pytest_bdd import scenario, given, when, then
 
 
 @scenario('../features/farmers.feature', 'Admin creates a new farmer successfully')
@@ -28,3 +28,8 @@ def click_add_farmer(farmers_page):
 @then("the Add New Farmer popup should appear")
 def verify_add_farmer_popup(farmers_page):
     assert farmers_page.is_add_farmer_popup_visible()
+"""
+
+with open('steps/test_farmers_steps.py', 'w') as f:
+    f.write(content)
+print('Done')
